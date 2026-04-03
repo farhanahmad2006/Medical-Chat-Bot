@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="fw-bold text-primary">Your Health History</h2>
+        <p class="text-muted">A record of your past consultations</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card glass-card border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive dashboard-table">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th class="ps-4 py-3">Date</th>
+                                <th class="py-3">Symptoms</th>
+                                <th class="py-3">Details</th>
+                                <th class="py-3">Result Preview</th>
+                                <th class="py-3">Image</th>
+                                <th class="py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in history %}
+                            <tr>
+                                <td class="ps-4 text-muted small">{{ record.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td class="fw-bold text-dark">{{ record.symptoms[:50] }}{% if record.symptoms|length >
+                                    50 %}...{% endif %}</td>
+                                <td>
+                                    {% if record.weight %}
+                                    <span class="badge bg-light text-dark border">Weight: {{ record.weight }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-muted small">
+                                    {{ record.gemini_response[:100] }}...
+                                </td>
+                                <td>
+                                    {% if record.report_image_path %}
+                                    <i class="fas fa-image text-primary" title="Image Uploaded"></i>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="/history/{{ record.id }}"
+                                        class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                        <i class="fas fa-eye me-1"></i> View Report
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="fas fa-notes-medical fs-1 mb-3 d-block alpha-50"></i>
+                                    No history found. Start by analyzing your symptoms!
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

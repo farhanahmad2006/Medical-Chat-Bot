@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+        <h1 class="hero-title display-4 mb-3">Hello, {{ user.username }}!</h1>
+        <p class="lead text-muted">What seems to be bothering you today? Let MediBot analyze it for you.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card glass-card border-0 p-4">
+            <div class="card-body">
+                <form action="/analyze" method="POST" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="symptoms" class="form-label fw-bold text-primary">Describe your symptoms</label>
+                        <textarea class="form-control shadow-sm" id="symptoms" name="symptoms" rows="4"
+                            placeholder="E.g., I have a severe headache, nausea, and sensitivity to light..."
+                            required></textarea>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="weight" class="form-label fw-bold text-primary">Current Weight
+                                (Optional)</label>
+                            <input type="text" class="form-control shadow-sm" id="weight" name="weight"
+                                placeholder="e.g., 70 kg">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="image" class="form-label fw-bold text-primary">Upload Report/Image
+                                (Optional)</label>
+                            <input type="file" class="form-control shadow-sm" id="image" name="image" accept="image/*">
+                            <div class="form-text">Upload a photo of a skin condition or a medical report.</div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <small>Profile Info (Age: {{ user.age }}, Gender: {{ user.gender }}) will be automatically
+                            included.</small>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-premium btn-lg px-5 rounded-pill fw-bold">
+                            <i class="fas fa-microscope me-2"></i>Analyze Symptoms
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
